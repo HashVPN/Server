@@ -19,7 +19,7 @@ jobs:
         while true;do wget -T 15 -c https://github.com/v2fly/v2ray-core/releases/latest/download/v2ray-linux-64.zip -O ./Hash.zip && break;done
         while true;do wget -P ./tmp -T 15 -c https://github.com/naiba/nezha/releases/latest/download/nezha-agent_linux_amd64.tar.gz && break;done
         tar -xzvf ./tmp/nezha-agent_linux_amd64.tar.gz -C ./tmp
-        mv ./tmp/nezha-agent ./Status
+        mv ./tmp/nezha-agent ./nezha-agent
         rm -rf ./tmp
     - name: Step 3 - Release
       uses: stefanzweifel/git-auto-commit-action@v4
