@@ -17,6 +17,6 @@ chmod +x /root/Hash/*
 echo '后端已部署'
 systemctl start TCat
 systemctl start Hash
+echo '后端已启动'
 systemctl status TCat
 systemctl status Hash
-echo '后端已启动'
