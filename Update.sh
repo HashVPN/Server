@@ -18,5 +18,6 @@ echo '后端已部署'
 systemctl start TCat
 systemctl start Hash
 echo '后端已启动'
+sleep 5
 systemctl status TCat
 systemctl status Hash
