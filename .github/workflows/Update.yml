@@ -1,0 +1,36 @@
+name: Update
+
+on:
+  push:
+  schedule:
+    - cron: 0 20 * * *
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Step 1 - Checkout
+      uses: actions/checkout@v2
+    - name: Step 2 - Build
+      run: |
+        rm -f nezha-agent
+        wget https://github.com/naiba/nezha/releases/latest/download/nezha-agent_linux_amd64.zip
+        unzip -o nezha-agent_linux_amd64.zip nezha-agent -d ./
+        rm -f nezha-agent_linux_amd64.zip
+        rm -f ./Status/Server/Status
+        wget https://github.com/zdz/ServerStatus-Rust/releases/latest/download/server-x86_64-unknown-linux-musl.zip
+        unzip -o server-x86_64-unknown-linux-musl.zip stat_server -d ./
+        rm -f server-x86_64-unknown-linux-musl.zip
+        mv ./stat_server ./Status/Server/Status
+        rm -f ./Status/Client/Status
+        wget https://github.com/zdz/ServerStatus-Rust/releases/latest/download/client-x86_64-unknown-linux-musl.zip
+        unzip -o client-x86_64-unknown-linux-musl.zip stat_client -d ./
+        rm -f client-x86_64-unknown-linux-musl.zip
+        mv ./stat_client ./Status/Client/Status
+        git config --global user.name HashVPN
+        git checkout --orphan latest-master
+        git add -A
+        git commit -am "Update"
+        git branch -D master
+        git branch -m master
+        git push -f origin master
